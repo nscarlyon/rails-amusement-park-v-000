@@ -20,8 +20,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-#    @ride_info = params[:ride_info] if params[:ride_info]
-#    @ride_info ||= false
+    @ride_info = params[:ride_info] if params[:ride_info]
+    @ride_info ||= false
   end
 
   def edit

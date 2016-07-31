@@ -24,7 +24,7 @@ describe 'Feature Test: User Signup', :type => :feature do
     admin_signup
   end
 
-  it "on sign up for admin, successfully adds a session hash" do 
+  it "on sign up for admin, successfully adds a session hash" do
     admin_signup
     expect(page.get_rack_session_key('user_id')).to_not be_nil
   end
@@ -79,7 +79,7 @@ end
 
 describe 'Feature Test: Go on a Ride', :type => :feature do
 
-  before :each do 
+  before :each do
     @rollercoaster = Attraction.create(
       :name => "Roller Coaster",
       :tickets => 5,
@@ -198,7 +198,7 @@ describe 'Feature Test: Go on a Ride', :type => :feature do
     click_link('See attractions')
     click_link("Go on #{@ferriswheel.name}")
     click_button("Go on this ride")
-    expect(page).to have_content("You do not have enough tickets the #{@ferriswheel.name}")
+    expect(page).to have_content("You do not have enough tickets for the #{@ferriswheel.name}")
     expect(page).to have_content("Tickets: 1")
   end
 
@@ -209,14 +209,14 @@ describe 'Feature Test: Go on a Ride', :type => :feature do
     click_link("Go on #{@rollercoaster.name}")
     click_button("Go on this ride")
     expect(page).to have_content("You are not tall enough to ride the #{@rollercoaster.name}")
-    expect(page).to have_content("You do not have enough tickets the #{@rollercoaster.name}")
+    expect(page).to have_content("You do not have enough tickets for the #{@rollercoaster.name}")
     expect(page).to have_content("Tickets: 1")
   end
 end
 
 describe 'Feature Test: Admin Flow', :type => :feature do
 
-  before :each do 
+  before :each do
     @rollercoaster = Attraction.create(
       :name => "Roller Coaster",
       :tickets => 5,

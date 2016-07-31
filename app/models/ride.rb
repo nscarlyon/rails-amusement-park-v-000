@@ -1,3 +1,4 @@
+require 'pry'
 class Ride < ActiveRecord::Base
   belongs_to :user
   belongs_to :attraction
@@ -9,7 +10,7 @@ class Ride < ActiveRecord::Base
   end
 
   def tall_enough?
-    if user.height < attraction.min_height
+    if self.user.height < self.attraction.min_height
       "Sorry. You are not tall enough to ride the #{attraction.name}."
     end
   end
@@ -22,11 +23,17 @@ class Ride < ActiveRecord::Base
     elsif tall_enough?
       tall_enough?
     else
-      new_happiness = self.user.happiness + self.attraction.happiness_rating
-      new_nausea = self.user.nausea + self.attraction.nausea_rating
-      new_tickets =  self.user.tickets - self.attraction.tickets
+      user = self.user
 
-      self.user.update(happiness: new_happiness, nausea: new_nausea, tickets: new_tickets)
+      new_happiness = user.happiness + self.attraction.happiness_rating
+      new_nausea = user.nausea + self.attraction.nausea_rating
+      new_tickets =  user.tickets - self.attraction.tickets
+
+      user.update!(happiness: new_happiness)
+      user.update!(nausea: new_nausea)
+      user.update!(tickets: new_tickets)
+      user.save
+      "Thanks for riding the #{self.attraction.name}!"
     end
   end
 end
